@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Fruits(fruitImage, labelTag, fruitName, currentAmount) {
+function Button(fruitImage, labelTag, fruitName, currentAmount) {
     return (
         <article className="fruit">
             <img src={fruitImage} alt ="image-of-fruit"/>
@@ -11,11 +11,15 @@ function Fruits(fruitImage, labelTag, fruitName, currentAmount) {
              </button>
             <p> {currentAmount}</p>
             <button id="plus-button" type="text" placeholder="+">
+
             </button>
         </article>
+
     );
 }
+
+
 // hoe de buttons maken?
 
 
-export default Fruits;
+export default Button;
