@@ -1,7 +1,9 @@
 import React from 'react';
 import './App.css';
-import logo from './assets/screenshot-logo.png'
-
+import logo from './assets/screenshot-logo.png';
+import FruitCounter from "./components/FruitCounter";
+import Button from "./components/Button";
+import ValueField from "./components/ValueField";
 
 function App() {
     const [amountStrawberry, setAmountStrawberry] = React.useState(0);
@@ -28,8 +30,7 @@ function App() {
     Bezorgfrequentie: ${deliveryValue} en graag  ${timeslotValue},
     Opmerkingen: ${comments},
     Algemene voorwaarden: ${termsandconditions}
-   
-   Fruitmand bestelling - aardbeiden: ${amountStrawberry}, bananen: ${amountBanana}, appels: ${amountApples}, kiwi's: ${amountKiwis}`);
+    Fruitmand bestelling - aardbeien: ${amountStrawberry}, bananen: ${amountBanana}, appels: ${amountApples}, kiwi's: ${amountKiwis}`);
     };
 
 
@@ -45,95 +46,85 @@ function App() {
         <>
             <img src={logo} alt="logo"/>
             <h1>Fruitmand bezorgservice</h1>
-
             <section className="fruit-counter">
 
-            <article className="fruit">
+                <article className="fruit">
                     <p>🍓Strawberries </p>
-                <button id="minus-button" type="button"  disabled={amountStrawberry===0} onClick={()=> setAmountStrawberry(amountStrawberry -1 )}>
-                -
-                </button>
-                <p> {amountStrawberry} </p>
-                <button id="plus-button" type="button"  onClick={()=> setAmountStrawberry(amountStrawberry + 1)}>
-               +
-                </button>
+                <FruitCounter
+                fruitAmount={amountStrawberry}
+                setFruitAmount={setAmountStrawberry}
+                />
             </article>
 
             <article className="fruit">
                     <p> 🍌Bananas  </p>
-                <button id="minus-button" type="text"  disabled={amountBanana===0} onClick={()=> setAmountBanana(amountBanana -1 )}>
-                -
-                </button>
-                <p> {amountBanana} </p>
-                <button id="plus-button" type="text" onClick={()=> setAmountBanana(amountBanana + 1)}>
-               +
-                </button>
+                <FruitCounter
+                fruitAmount={amountKiwis}
+                setFruitAmount={setAmountKiwis}
+                />
             </article>
 
             <article className="fruit">
                     <p> 🍏 Apples  </p>
-                <button id="minus-button" type="text" disabled={amountApples===0} onClick={()=> setAmountApples(amountApples -1 )}>
-               -
-                </button>
-                <p> {amountApples} </p>
-                <button id="plus-button" type="text"  onClick={()=> setAmountApples(amountApples + 1)}>
-                 +
-                </button>
+                <FruitCounter
+                fruitAmount={amountApples}
+                setFruitAmount={setAmountApples}
+                />
             </article>
 
             <article className="fruit">
                     <p> 🥝 Kiwis  </p>
-                <button id="minus-button" type="text"  disabled={amountKiwis===0} onClick={()=> setAmountKiwis(amountKiwis -1 )}>
-                -
-                </button>
-                <p> {amountKiwis} </p>
-                <button id="plus-button" type="text"  onClick={()=> setAmountKiwis(amountKiwis + 1)}>
-                +
-                </button>
+                <FruitCounter
+                fruitAmount={amountKiwis}
+                setFruitAmount={setAmountKiwis}
+                />
              </article>
 
-            <button type="button" onClick={() => resetFruits()} >
+            <Button type="button" clickHandler={resetFruits}>
                 Reset
-            </button>
+            </Button>
             </section>
 
+
         <form onSubmit={handleSubmit}>
+
         <section>
-        <label htmlFor="detais-name">Voornaam</label>
-            <input
-            type="text"
-            id="details-name"
+        <ValueField
+            label="Voornaam"
+            input="name"
+            inputType="text"
             value={nameValue}
-            onChange={(e)=> setNameValue(e.target.value)}>
-            </input>
+            changeHandler={setNameValue}
+        />
         </section>
-            <section>
-                <label htmlFor="details-age">Leeftijd</label>
-                <input
-                    type="text"
-                    id="details-age"
-                    value={ageValue}
-                    onChange={(e)=> setAgeValue(e.target.value)}>
-                </input>
-            </section>
-            <section>
-            <label htmlFor="details-email">Email</label>
-                <input
-                    type="text"
-                    id="details-email"
-                    value={emailValue}
-                    onChange={(e)=> setEmailValue(e.target.value)}>
-                </input>
-            </section>
         <section>
-            <label htmlFor="details-age">Postcode</label>
-                <input
-                    type="text"
-                    id="details-zipcode"
+            <ValueField
+                label="Leeftijd"
+                input="age"
+                inputType="text"
+                value={ageValue}
+                changeHandler={setAgeValue}
+            />
+            </section>
+            <section>
+                <ValueField
+                    label="Email"
+                    input="email"
+                    inputType="email"
+                    value={emailValue}
+                    changeHandler={setEmailValue}
+                />
+            </section>
+            <section>
+                <ValueField
+                    label="Postcode"
+                    input="zipcode"
+                    inputType="text"
                     value={zipcodeValue}
-                    onChange={(e)=> setZipcodeValue(e.target.value)}>
-                </input>
-        </section>
+                    changeHandler={setZipcodeValue}
+                />
+            </section>
+
         <section>
             <label htmlFor="delivery" >Bezorgfrequentie:</label>
                 <select id="delivery" name="delivery" onChange={(e)=> setDeliveryValue(e.target.value)}>

@@ -1,25 +1,14 @@
 import React from 'react';
 
-function Button(fruitImage, labelTag, fruitName, currentAmount) {
+function Button({buttonType, disabled, clickHandler, children}) {
     return (
-        <article className="fruit">
-            <img src={fruitImage} alt ="image-of-fruit"/>
-            <label htmlFor={labelTag}>
-             {fruitName}
-            </label>
-            <button id="minus-button" type="text" placeholder="-">
-             </button>
-            <p> {currentAmount}</p>
-            <button id="plus-button" type="text" placeholder="+">
-
-            </button>
-        </article>
-
+        <button type={buttonType}
+        disabled={disabled || false}
+        onClick={clickHandler}
+        >
+       {children}
+        </button>
     );
 }
-
-
-// hoe de buttons maken?
-
 
 export default Button;
