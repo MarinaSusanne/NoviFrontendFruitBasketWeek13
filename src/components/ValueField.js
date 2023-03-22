@@ -9,7 +9,7 @@ function ValueField({input, inputType, label, value, changeHandler}) {
                 name={`details-${input}`}
                 id={`details-${input}`}
                 value={value}
-                onChange={(e) => changeHandler(e.target.value)}
+                onChange={changeHandler}
             />
         </>
     );

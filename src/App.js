@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './App.css';
 import logo from './assets/screenshot-logo.png';
 import FruitCounter from "./components/FruitCounter";
@@ -11,26 +11,32 @@ function App() {
     const [amountApples, setAmountApples] = React.useState(0);
     const [amountKiwis, setAmountKiwis] = React.useState(0);
 
-    const [nameValue, setNameValue] = React.useState("");
-    const [emailValue, setEmailValue] = React.useState('');
-    const [ageValue, setAgeValue] = React.useState(0);
-    const [zipcodeValue, setZipcodeValue] = React.useState('');
-    const [deliveryValue, setDeliveryValue] = React.useState('week');
-    const [timeslotValue, setTimeslotValue] = React.useState('daytime');
-    const [comments, setComments] = React.useState('');
-    const [termsandconditions, setTermsandconditions] = React.useState(false);
+    const [formState, setFormState] = useState({
+        nameValue: '',
+        emailValue: '',
+        ageValue: 0,
+        zipcodeValue: '',
+        deliveryValue: 'week',
+        timeslotValue: 'daytime',
+        comments: '',
+        termsandconditions: false,
+    })
+
+    function handleFormChange(e){
+     const changedFieldName = e.target.name;
+     const inputValue = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
+
+       setFormState({
+           ...formState,
+           [changedFieldName]: inputValue,
+           });
+    }
 
 
-    function handleSubmit(e) {
+       function handleSubmit(e) {
         e.preventDefault();
-        console.log(`
-    Naam: ${nameValue}, 
-    Leeftijd: ${ageValue}, 
-    Postcode: ${zipcodeValue}, 
-    Bezorgfrequentie: ${deliveryValue} en graag  ${timeslotValue},
-    Opmerkingen: ${comments},
-    Algemene voorwaarden: ${termsandconditions}
-    Fruitmand bestelling - aardbeien: ${amountStrawberry}, bananen: ${amountBanana}, appels: ${amountApples}, kiwi's: ${amountKiwis}`);
+        console.log(formState);
+           console.log(`Fruitmand bestelling - aardbeien: ${amountStrawberry}, bananen: ${amountBanana}, appels: ${amountApples}, kiwi's: ${amountKiwis}`)
     };
 
 
@@ -48,7 +54,7 @@ function App() {
             <h1>Fruitmand bezorgservice</h1>
             <section className="fruit-counter">
 
-                <article className="fruit">
+                <article >
                     <p>🍓Strawberries </p>
                 <FruitCounter
                 fruitAmount={amountStrawberry}
@@ -56,7 +62,7 @@ function App() {
                 />
             </article>
 
-            <article className="fruit">
+            <article >
                     <p> 🍌Bananas  </p>
                 <FruitCounter
                 fruitAmount={amountKiwis}
@@ -64,7 +70,7 @@ function App() {
                 />
             </article>
 
-            <article className="fruit">
+            <article>
                     <p> 🍏 Apples  </p>
                 <FruitCounter
                 fruitAmount={amountApples}
@@ -72,7 +78,7 @@ function App() {
                 />
             </article>
 
-            <article className="fruit">
+            <article>
                     <p> 🥝 Kiwis  </p>
                 <FruitCounter
                 fruitAmount={amountKiwis}
@@ -80,7 +86,7 @@ function App() {
                 />
              </article>
 
-            <Button type="button" clickHandler={resetFruits}>
+            <Button type="button"  clickHandler={resetFruits}>
                 Reset
             </Button>
             </section>
@@ -93,8 +99,8 @@ function App() {
             label="Voornaam"
             input="name"
             inputType="text"
-            value={nameValue}
-            changeHandler={setNameValue}
+            value={formState.nameValue}
+            changeHandler={handleFormChange}
         />
         </section>
         <section>
@@ -102,8 +108,8 @@ function App() {
                 label="Leeftijd"
                 input="age"
                 inputType="text"
-                value={ageValue}
-                changeHandler={setAgeValue}
+                value={formState.ageValue}
+                changeHandler={handleFormChange}
             />
             </section>
             <section>
@@ -111,8 +117,8 @@ function App() {
                     label="Email"
                     input="email"
                     inputType="email"
-                    value={emailValue}
-                    changeHandler={setEmailValue}
+                    value={formState.emailValue}
+                    changeHandler={handleFormChange}
                 />
             </section>
             <section>
@@ -120,33 +126,33 @@ function App() {
                     label="Postcode"
                     input="zipcode"
                     inputType="text"
-                    value={zipcodeValue}
-                    changeHandler={setZipcodeValue}
+                    value={formState.zipcodeValue}
+                    changeHandler={handleFormChange}
                 />
             </section>
 
         <section>
             <label htmlFor="delivery" >Bezorgfrequentie:</label>
-                <select id="delivery" name="delivery" onChange={(e)=> setDeliveryValue(e.target.value)}>
+                <select id="delivery" name="delivery" value={formState.deliveryValue} onChange={handleFormChange}>
                     <option value="week">Iedere week</option>
                     <option value="two-week">Om de week</option>
                     <option value="month">Iedere maand</option>
                 </select>
 
             <label htmlFor="daytime"> Overdag </label>
-                <input type="radio" value="daytime" name="timeslot" id="timeslot-field-daytime" checked={timeslotValue === 'daytime'} onChange={(e)=> setTimeslotValue(e.target.value)} />
+                <input type="radio" value="daytime" name="timeslotValue" id="timeslot-field-daytime" checked={formState.timeslotValue === 'daytime'} onChange={handleFormChange} />
             <label htmlFor="evening">'s Avonds </label>
-                <input type ="radio" value="evening" name="timeslot" id="timeslot-field-evening" checked={timeslotValue === 'evening'} onChange={(e)=> setTimeslotValue(e.target.value)} />
+                <input type ="radio" value="evening" name="timeslotValue" id="timeslot-field-evening" checked={formState.timeslotValue === 'evening'} onChange={handleFormChange} />
         </section>
 
          <section>
              <label htmlFor="comments"> Opmerkingen </label>
-             <textarea  id="comment-section" name="comments" value={comments} onChange={(e) => setComments(e.target.value)} rows={8} cols={50}/>
+             <textarea  id="comment-section" name="comments" value={formState.comments} onChange={handleFormChange} rows={8} cols={50}/>
          </section>
 
          <section>
              <label htmlFor="terms-and-conditions">  Ik ga akkoord met de voorwaarden </label>
-            <input type="checkbox" id ="terms-and-conditions" name="agree" value={termsandconditions}  onChange={(e)=> setTermsandconditions(e.target.checked)}/>
+            <input type="checkbox" id ="terms-and-conditions" name="terms-and-conditions" value={formState.termsandconditions}  onChange={handleFormChange}/>
         </section>
 
             <section>
